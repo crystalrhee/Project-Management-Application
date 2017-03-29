@@ -14,7 +14,6 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
 	static $password;
-
 	return [
 	'name' => $faker->name,
 	'email' => $faker->unique()->safeEmail,
@@ -23,19 +22,75 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 	];
 });
 
-$factory->define(App\Project::class, function(Faker\Generator $faker) {
+// contacts
+$factory->define(App\Contact::class, function(Faker\Generator $faker) {
 	return [
-	'id' => $faker->unique()->numberBetween($min = 1, $max = 50),
-	'status' => $faker->randomElement(['active', 'icebox', 'complete']),
-	'type' => $faker->randomElement(['project', 'feature']),
-	'start_date' => $faker->date,
-	'end_date' => $faker->date,
-	'client' => $faker->name,
+	'fname' => $faker->firstName,
+	'lname' => $faker->lastName,
+	'title' => $faker->word,
+	'email' => $faker->email,
+	'phone' => $faker->phoneNumber,
+	];
+});
+
+// division
+$factory->define(App\Division::class, function(Faker\Generator $faker) {
+	return [
+	'title' => $faker->word,
 	'description' => $faker->paragraph,
-	'notes' => $faker->sentence,
-	'contacts_id' => $faker->randomDigit,
-	'user_id' => function() {
-		return factory('App\User')->create()->id;
+	'url' => $faker->url,
+	];
+});
+
+// areas
+$factory->define(App\Area::class, function(Faker\Generator $faker) {
+	return [
+	'title' => $faker->word,
+	'description' => $faker->paragraph,
+	'url' => $faker->url,
+	'division' => function() {
+		return factory('App\Division')->create()->title;
+	},
+	'leadership' => function() {
+		return factory('App\Contact')->create()->lname;
 	},
 	];
 });
+
+// clients
+$factory->define(App\Client::class, function(Faker\Generator $faker) {
+	return [
+	'title' => $faker->word,
+	'description' => $faker->paragraph,
+	'url' => $faker->url,
+	'area' => function() {
+		return factory('App\Area')->create()->title;
+	},
+	'owners' => function() {
+		return factory('App\Contact')->create()->lname;
+	},
+	'contributors' => function() {
+		return factory('App\Contact')->create()->lname;
+	},
+	];
+});
+
+// projects
+$factory->define(App\Project::class, function(Faker\Generator $faker) {
+	return [
+	'status' => $faker->randomElement(['active', 'icebox', 'complete']),
+	'phase' => $faker->word,
+	'type' => $faker->randomElement(['project', 'feature']),
+	'start_date' => $faker->date,
+	'end_date' => $faker->date,
+	'client' => function() {
+		return factory('App\Client')->create()->title;
+	},
+	'description' => $faker->paragraph,
+	'notes' => $faker->sentence,
+	'contacts' => function() {
+		return factory('App\Contact')->create()->lname;
+	},
+	];
+});
+

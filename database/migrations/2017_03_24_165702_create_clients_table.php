@@ -18,9 +18,10 @@ class CreateClientsTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('url');
-            $table->integer('area');
-            $table->integer('owners');
+            $table->string('area');
+            $table->string('owners');
             $table->string('contributors');
+            $table->timestamps();
         });
     }
 

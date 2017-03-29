@@ -18,8 +18,9 @@ class CreateAreasTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('url');
-            $table->integer('division');
-            $table->integer('leadership');
+            $table->string('division');
+            $table->string('leadership');
+            $table->timestamps();
         });
     }
 

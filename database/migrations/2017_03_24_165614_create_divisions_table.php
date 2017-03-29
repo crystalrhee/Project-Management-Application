@@ -18,6 +18,7 @@ class CreateDivisionsTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('url');
+            $table->timestamps();
         });
     }
 

@@ -16,14 +16,14 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('status', array('active', 'icebox', 'complete'));
+            $table->string('phase');
             $table->enum('type', array('project', 'feature'));
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('client');
+            $table->string('client');  //foreign key
             $table->longText('description');
             $table->longText('notes');
-            $table->integer('contacts_id');
-            $table->integer('user_id');
+            $table->string('contacts');  //foreign key
             $table->timestamps();
         });
     }
