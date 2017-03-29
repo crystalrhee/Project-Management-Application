@@ -10,7 +10,11 @@
                 <div class="panel-body">
                     @foreach ($projects as $project)
                         <article>
-                        <h4> {{ $project->client }} </h4>
+                        <h4> 
+                            <a href="/projects/{{ $project->id }}">
+                                {{ $project->client }}
+                            </a>
+                        </h4>
                         <div class="body"> {{ $project->description }}</div>
                         </article>
 
